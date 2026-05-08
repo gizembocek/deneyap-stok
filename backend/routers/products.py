@@ -10,6 +10,8 @@ from typing import List, Optional
 import os
 import uuid
 import shutil
+from supabase_utils import upload_file_to_supabase
+
 
 router = APIRouter(prefix="/api/products", tags=["Products"])
 
@@ -392,6 +394,24 @@ async def upload_image(file: UploadFile = File(...), current_user: User = Depend
     if file_size > MAX_FILE_SIZE:
         raise HTTPException(status_code=400, detail="Dosya boyutu 5MB'dan büyük olamaz")
 
+    # Try Supabase Storage first
+    try:
+        # Read file content for supabase upload
+        file_content = await file.read()
+        await file.seek(0) # Reset pointer for potential local fallback
+        
+        supabase_url = await upload_file_to_supabase(
+            file_content, 
+            file.filename, 
+            file.content_type
+        )
+        
+        if supabase_url:
+            return {"url": supabase_url}
+    except Exception as e:
+        print(f"Supabase upload failed, falling back to local: {e}")
+
+    # Fallback to Local Storage
     filename = f"{uuid.uuid4()}{ext}"
     filepath = os.path.join(UPLOAD_DIR, filename)
 
