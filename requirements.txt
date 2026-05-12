@@ -15,4 +15,3 @@ Pillow>=10.0.0
 bcrypt>=4.0.0
 psycopg2-binary>=2.9.9
 supabase>=2.4.0
-gunicorn>=21.2.0
