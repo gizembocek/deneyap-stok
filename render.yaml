@@ -3,9 +3,16 @@ services:
     name: deneyap-depo-yonetim
     runtime: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python3 -m gunicorn.app.wsgiapp -w 4 -k uvicorn.workers.UvicornWorker backend.main:app --bind 0.0.0.0:$PORT"
+    startCommand: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker backend.main:app --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION
         value: 3.10
       - key: DATABASE_URL
-        value: sqlite:///./deneyap_depo.db
+        fromDatabase:
+          name: deneyap-db
+          property: connectionString
+
+databases:
+  - name: deneyap-db
+    plan: free
+
