@@ -23,7 +23,7 @@ async function renderDashboard() {
 
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="glass rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.05s">
+                <div class="glass rounded-2xl p-5 animate-slide-up cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg" style="animation-delay: 0.05s" onclick="resetFilters(); navigateTo('products')">
                     <div class="flex items-center justify-between mb-3">
                         <div class="w-12 h-12 rounded-xl bg-deneyap-blue-500/20 flex items-center justify-center">
                             <span class="material-icons-outlined text-deneyap-blue-400 text-2xl">inventory_2</span>
@@ -33,7 +33,7 @@ async function renderDashboard() {
                     <p class="text-3xl font-bold text-white">${stats.total_products}</p>
                     <p class="text-sm text-gray-400 mt-1">Ürün Çeşidi</p>
                 </div>
-                <div class="glass rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.1s">
+                <div class="glass rounded-2xl p-5 animate-slide-up cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg" style="animation-delay: 0.1s" onclick="resetFilters(); productFilters.low_stock=true; navigateTo('products')">
                     <div class="flex items-center justify-between mb-3">
                         <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center">
                             <span class="material-icons-outlined text-red-400 text-2xl">warning</span>
@@ -43,7 +43,7 @@ async function renderDashboard() {
                     <p class="text-3xl font-bold ${stats.low_stock_count > 0 ? 'text-red-400' : 'text-white'}">${stats.low_stock_count}</p>
                     <p class="text-sm text-gray-400 mt-1">Kritik Stok</p>
                 </div>
-                <div class="glass rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.15s">
+                <div class="glass rounded-2xl p-5 animate-slide-up cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg" style="animation-delay: 0.15s" onclick="resetFilters(); productFilters.status='Bozuk / Kırık'; navigateTo('products')">
                     <div class="flex items-center justify-between mb-3">
                         <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center">
                             <span class="material-icons-outlined text-orange-400 text-2xl">build</span>
@@ -52,7 +52,7 @@ async function renderDashboard() {
                     <p class="text-3xl font-bold text-white">${stats.broken_count}</p>
                     <p class="text-sm text-gray-400 mt-1">Bozuk / Kırık</p>
                 </div>
-                <div class="glass rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.2s">
+                <div class="glass rounded-2xl p-5 animate-slide-up cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg" style="animation-delay: 0.2s" onclick="navigateTo('warehouses')">
                     <div class="flex items-center justify-between mb-3">
                         <div class="w-12 h-12 rounded-xl bg-deneyap-yellow-500/20 flex items-center justify-center">
                             <span class="material-icons-outlined text-deneyap-yellow-400 text-2xl">warehouse</span>
@@ -70,7 +70,7 @@ async function renderDashboard() {
                     const c = colors[cat] || 'deneyap-blue';
                     const pct = stats.total_products > 0 ? Math.round((count / stats.total_products) * 100) : 0;
                     return `
-                    <div class="glass rounded-2xl p-5">
+                    <div class="glass rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg" onclick="resetFilters(); productFilters.category='${cat}'; navigateTo('products')">
                         <div class="flex items-center gap-3 mb-3">
                             <span class="material-icons-outlined text-${c}-400">${getCategoryIcon(cat)}</span>
                             <span class="text-sm font-medium text-gray-300">${cat}</span>
@@ -93,7 +93,7 @@ async function renderDashboard() {
                     <h3 class="text-lg font-bold text-white flex items-center gap-2">
                         <span class="material-icons-outlined text-red-400">warning</span>Kritik Stok Uyarıları
                     </h3>
-                    <button onclick="navigateTo('products'); setTimeout(() => { document.querySelector('[data-filter=low]')?.click(); }, 200)" class="text-sm text-deneyap-blue-400 hover:text-deneyap-blue-300">Tümünü Gör →</button>
+                    <button onclick="resetFilters(); productFilters.low_stock=true; navigateTo('products')" class="text-sm text-deneyap-blue-400 hover:text-deneyap-blue-300">Tümünü Gör →</button>
                 </div>
                 <div class="overflow-x-auto"><table class="w-full">
                     <thead><tr class="text-xs text-gray-500 uppercase border-b border-slate-700">
