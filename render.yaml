@@ -7,6 +7,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.10
+      - key: PYTHONPATH # Bu satırı ekliyoruz
+        value: backend:frontend:.
       - key: DATABASE_URL
         fromDatabase:
           name: deneyap-db
@@ -15,4 +17,3 @@ services:
 databases:
   - name: deneyap-db
     plan: free
-
