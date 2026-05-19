@@ -1,5 +1,5 @@
 // API Helper Module
-const API_BASE = '';
+const API_BASE = 'https://deneyap-stok-proje.onrender.com';
 
 class ApiClient {
     constructor() {
